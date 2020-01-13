@@ -1,9 +1,23 @@
 import React from "react";
+import TodoList from "./components/TodoComponents/TodoList";
+
+const example = [
+  {
+    task: "get Baked in Garage",
+    id: 1528817077420,
+    completed: false
+  },
+  {
+    task: "Organize Cookies",
+    id: 1528817084358,
+    completed: false
+  }
+];
 
 class App extends React.Component {
   constructor() {
     super();
-    this.state = { todo: [] };
+    this.state = { todo: [...example] };
   }
   addTask = name => {
     const newTask = {
@@ -28,8 +42,9 @@ class App extends React.Component {
   // this component is going to take care of state, and any change handlers you need to work with your state
   render() {
     return (
-      <div>
+      <div className="Todo-App">
         <h2>Welcome to your Todo App!</h2>
+        <TodoList todo={this.state.todo} />
       </div>
     );
   }
