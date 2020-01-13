@@ -1,5 +1,6 @@
 import React from "react";
 import TodoList from "./components/TodoComponents/TodoList";
+import TodoForm from "./components/TodoComponents/TodoForm";
 
 const example = [
   {
@@ -9,7 +10,7 @@ const example = [
   },
   {
     task: "Organize Cookies",
-    id: 1528817084358,
+    id: 1528817084420,
     completed: false
   }
 ];
@@ -25,17 +26,18 @@ class App extends React.Component {
       id: Date.now(),
       completed: false
     };
-    const clone = [...this.state.todo];
-    clone.push(newTask);
-    this.setState({ todo: clone });
+    const clone = { ...this.state };
+    clone.todo.push(newTask);
+    this.setState(clone);
   };
   removeTask = name => {
     const idx = this.state.todo.find(item => item.task === name).indexOf();
-    const newTodo = [
-      ...this.state.todo.slice(0, idx),
-      ...this.state.todo.slice(idx + 1)
-    ];
-    this.setState(newTodo);
+    this.setState({
+      todo: [
+        ...this.state.todo.slice(0, idx),
+        ...this.state.todo.slice(idx + 1)
+      ]
+    });
   };
   // you will need a place to store your state in this component.
   // design `App` to be the parent component of your application.
@@ -45,6 +47,7 @@ class App extends React.Component {
       <div className="Todo-App">
         <h2>Welcome to your Todo App!</h2>
         <TodoList todo={this.state.todo} />
+        <TodoForm addtask={this.addTask} removetask={this.removeTask} />
       </div>
     );
   }
