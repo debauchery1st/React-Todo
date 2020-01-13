@@ -13,7 +13,7 @@ class TodoList extends React.Component {
     return (
       <ul className="TodoList">
         {this.state.todo.map(t => (
-          <Todo value={t.task} id={t.id} completed={t.completed} />
+          <Todo value={t.task} key={t.id} completed={t.completed} />
         ))}
       </ul>
     );
