@@ -21,7 +21,7 @@ class Todo extends React.Component {
         className={`Task${this.props.completed ? "-complete" : "-pending"}`}
         onClick={this.toggle}
       >
-        {this.state.value}
+        {this.props.completed ? "✅" + this.state.value : this.state.value}
       </li>
     );
   }
