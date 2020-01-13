@@ -20,6 +20,7 @@ class App extends React.Component {
     super();
     this.state = { todo: [...example] };
   }
+
   addTask = name => {
     const newTask = {
       task: name,
@@ -30,24 +31,29 @@ class App extends React.Component {
     clone.todo.push(newTask);
     this.setState(clone);
   };
-  removeTask = name => {
-    const idx = this.state.todo.find(item => item.task === name).indexOf();
-    this.setState({
-      todo: [
-        ...this.state.todo.slice(0, idx),
-        ...this.state.todo.slice(idx + 1)
-      ]
-    });
+
+  toggleComplete = id => {
+    const item = this.state.todo.find(item => item.id === id);
+    const idx = this.state.todo.indexOf(item);
+    item.completed = !item.completed;
+    const clone = { ...this.state };
+    clone.todo[idx] = item;
+    this.setState(clone);
+    console.log(idx, item);
   };
-  // you will need a place to store your state in this component.
-  // design `App` to be the parent component of your application.
-  // this component is going to take care of state, and any change handlers you need to work with your state
+
+  removeCompleted = () => {
+    const todo = this.state.todo.filter(item => item.completed === false);
+    this.setState({ todo });
+  };
+
   render() {
     return (
       <div className="Todo-App">
         <h2>Welcome to your Todo App!</h2>
-        <TodoList todo={this.state.todo} />
-        <TodoForm addtask={this.addTask} removetask={this.removeTask} />
+        <TodoList todo={this.state.todo} toggleComplete={this.toggleComplete} />
+        <TodoForm addtask={this.addTask} />
+        <button onClick={this.removeCompleted}>clear completed</button>
       </div>
     );
   }
