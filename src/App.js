@@ -3,11 +3,15 @@ import TodoList from "./components/TodoComponents/TodoList";
 import TodoForm from "./components/TodoComponents/TodoForm";
 import { AppContainer, ClearButton } from "./AppStyles";
 import { storeMemory, loadMemory } from "./services/persistence";
+import SearchBar from "./components/TodoComponents/SearchBar";
 
 class App extends React.Component {
   constructor() {
     super();
-    this.state = { todo: [...loadMemory()] };
+    this.state = {
+      todo: [...loadMemory()],
+      searchString: ""
+    };
   }
 
   persist = state => {
@@ -16,6 +20,7 @@ class App extends React.Component {
   };
 
   addTask = name => {
+    if (name.length === 0) return; // no blank tasks
     const newTask = {
       task: name,
       id: Date.now(),
@@ -41,11 +46,28 @@ class App extends React.Component {
     this.persist(clone);
   };
 
+  filterTodo = str => {
+    // update the search string
+    this.setState({ searchString: str });
+  };
+
+  whichTodo = () => {
+    return this.state.searchString.length > 0
+      ? this.state.todo.filter(t =>
+          t.task.toLowerCase().includes(this.state.searchString.toLowerCase())
+        )
+      : this.state.todo;
+  };
+
   render() {
     return (
       <AppContainer className="Todo-App">
-        <h2>Welcome to your Todo App!</h2>
-        <TodoList todo={this.state.todo} toggleComplete={this.toggleComplete} />
+        <SearchBar filterTodo={this.filterTodo} />
+        <h2>Todo!</h2>
+        <TodoList
+          todo={this.whichTodo()}
+          toggleComplete={this.toggleComplete}
+        />
         <TodoForm addtask={this.addTask} />
         <ClearButton onClick={this.removeCompleted}>
           clear completed
