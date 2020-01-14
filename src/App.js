@@ -36,9 +36,9 @@ class App extends React.Component {
   };
 
   removeCompleted = () => {
-    const state = { ...this.state };
-    state.todo = state.todo.filter(item => item.completed === false);
-    this.persist(state);
+    const clone = { ...this.state };
+    clone.todo = clone.todo.filter(item => item.completed === false);
+    this.persist(clone);
   };
 
   render() {
