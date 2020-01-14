@@ -2,7 +2,7 @@ import React from "react";
 import TodoList from "./components/TodoComponents/TodoList";
 import TodoForm from "./components/TodoComponents/TodoForm";
 import { AppContainer, ClearButton } from "./AppStyles";
-import { storeMemory, loadMemory } from "./services/persistance";
+import { storeMemory, loadMemory } from "./services/persistence";
 
 class App extends React.Component {
   constructor() {
