@@ -14,4 +14,8 @@ const ListItem = styled.li`
   }
 `;
 
-export { ListItem };
+const TextInput = styled.input`
+  border-radius: 0.25rem;
+`;
+
+export { ListItem, TextInput };

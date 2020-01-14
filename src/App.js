@@ -2,25 +2,18 @@ import React from "react";
 import TodoList from "./components/TodoComponents/TodoList";
 import TodoForm from "./components/TodoComponents/TodoForm";
 import { AppContainer, ClearButton } from "./AppStyles";
-
-const example = [
-  {
-    task: "get Baked in Garage",
-    id: 1528817077420,
-    completed: false
-  },
-  {
-    task: "Organize Cookies",
-    id: 1528817084420,
-    completed: false
-  }
-];
+import { storeMemory, loadMemory } from "./services/persistance";
 
 class App extends React.Component {
   constructor() {
     super();
-    this.state = { todo: [...example] };
+    this.state = { todo: [...loadMemory()] };
   }
+
+  persist = state => {
+    this.setState(state); // set the state
+    storeMemory(state.todo); // bake the cookies
+  };
 
   addTask = name => {
     const newTask = {
@@ -30,22 +23,22 @@ class App extends React.Component {
     };
     const clone = { ...this.state };
     clone.todo.push(newTask);
-    this.setState(clone);
+    this.persist(clone);
   };
 
   toggleComplete = id => {
     const item = this.state.todo.find(item => item.id === id);
     const idx = this.state.todo.indexOf(item);
-    item.completed = !item.completed;
     const clone = { ...this.state };
+    item.completed = !item.completed;
     clone.todo[idx] = item;
-    this.setState(clone);
-    console.log(idx, item);
+    this.persist(clone);
   };
 
   removeCompleted = () => {
-    const todo = this.state.todo.filter(item => item.completed === false);
-    this.setState({ todo });
+    const state = { ...this.state };
+    state.todo = state.todo.filter(item => item.completed === false);
+    this.persist(state);
   };
 
   render() {
