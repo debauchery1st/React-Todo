@@ -1,4 +1,5 @@
 import React from "react";
+import { ListItem } from "./componentStyles";
 
 class Todo extends React.Component {
   constructor(props) {
@@ -17,12 +18,12 @@ class Todo extends React.Component {
 
   render() {
     return (
-      <li
+      <ListItem
         className={`Task${this.props.completed ? "-complete" : "-pending"}`}
         onClick={this.toggle}
       >
         {this.props.completed ? "✅" + this.state.value : this.state.value}
-      </li>
+      </ListItem>
     );
   }
 }

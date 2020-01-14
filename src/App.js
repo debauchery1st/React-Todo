@@ -1,6 +1,7 @@
 import React from "react";
 import TodoList from "./components/TodoComponents/TodoList";
 import TodoForm from "./components/TodoComponents/TodoForm";
+import { AppContainer, ClearButton } from "./AppStyles";
 
 const example = [
   {
@@ -49,12 +50,14 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="Todo-App">
+      <AppContainer className="Todo-App">
         <h2>Welcome to your Todo App!</h2>
         <TodoList todo={this.state.todo} toggleComplete={this.toggleComplete} />
         <TodoForm addtask={this.addTask} />
-        <button onClick={this.removeCompleted}>clear completed</button>
-      </div>
+        <ClearButton onClick={this.removeCompleted}>
+          clear completed
+        </ClearButton>
+      </AppContainer>
     );
   }
 }
